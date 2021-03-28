@@ -9,7 +9,7 @@ public class Player {
     }
 
     public void addCardToHand(Card c){
-        hand.add(c);
+        this.hand.add(c);
     }
 
     public void discardCardFromHand(Card c, Deck deck){
@@ -18,10 +18,9 @@ public class Player {
     }
 
     //Returns the value of the card in a string
-    public String cardString(int index){
+    //TODO- consider removing this and just using the same method in the card class
+    public String cardString(Card c){
         String card = "";
-
-        Card c = this.hand.get(index);
 
         switch (c.getNumericalValue()){
             case 0:
@@ -82,4 +81,7 @@ public class Player {
         return card;
     }
 
+    public Card getCard(int cardNumber){
+        return hand.get(cardNumber);
+    }
 }

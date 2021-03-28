@@ -20,32 +20,49 @@ public class Game {
 
         playersList.add(humanPlayer);
 
-        for(int i = 0; i < 3; i++){
+        //Adds the robots to the players list
+        for (int i = 0; i < 3; i++) {
             playersList.add(new Robot());
         }
 
         //Calls the method to deal the first cards
-        dealFristCards(playersList, deckOfCards);
+        dealFirstCards(playersList, deckOfCards);
 
-
-        
+        //Will run the game until someone wins the game
+        while (!win()) {
+            for(int i = 0; i < humanPlayer.handSize(); i++){
+                    System.out.println("    " + i + humanPlayer.cardString(humanPlayer.getCard(i)));
+            }
+        }
     }
 
     //Checks if the player has won the game
-    private boolean win(){
+    private static boolean win(){
         return false;
     }
 
     //Deals out the first round of cards
-    private static void dealFristCards(ArrayList<Player> players, Deck deck){
+    private static void dealFirstCards(ArrayList<Player> players, Deck deck){
         for(int i = 0; i < players.size(); i++){
             while (players.get(i).handSize() < 4){
                 players.get(i).addCardToHand(deck.dealCard());
             }
         }
+        System.out.println("Your cards are:");
     }
 
-    private static String getCardString(){
-
+    //Method for allowing the human player to make their decisions
+    private static void playerDrawDecision(Deck deckOfCards, Scanner input, Player humanPlayer){
+        if(deckOfCards.drawPileSize() == 0){
+            System.out.println("The draw pile is empty you must draw a card from the discard pile: ");
+            humanPlayer.addCardToHand(deckOfCards.);
+        }
+        else if(deckOfCards.discardPileSize() == 0){
+            System.out.println("The discard pile is empty -- you must draw a card");
+            humanPlayer.addCardToHand(deckOfCards.discardCardTop());
+        }
+        else {
+            System.out.println("Do you want to pick up " + );
+        }
     }
 }
