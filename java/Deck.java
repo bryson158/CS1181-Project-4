@@ -43,7 +43,15 @@ public class Deck {
         return discardPile.size();
     }
 
+    //Returns the top card from the discard pile
     public Card discardCardTop() {
         return discardPile.get(discardPile.size()-1);
+    }
+
+    //Draws from the discard pile and removes the card from it
+    public Card discardCardDraw(){
+        Card card = discardCardTop();
+        this.discardPile.remove(card);
+        return card;
     }
 }
