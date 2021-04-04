@@ -12,9 +12,8 @@ public class Player {
         this.hand.add(c);
     }
 
-    public void discardCardFromHand(Card c, Deck deck){
-        hand.remove(c);
-        deck.addToDiscardPile(c);
+    public void discardCardFromHand(int index){
+        hand.remove(index);
     }
 
     //Returns the value of the card in a string

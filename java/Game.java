@@ -1,11 +1,7 @@
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.Scanner;
 
 public class Game {
-    //Todo- Determine if the rng is needed in this class
-    //Random rng = new Random();
-
     public static void main(String[] args){
         game();
     }
@@ -89,10 +85,7 @@ public class Game {
         System.out.println("Which card do you wish to discard (1-5)? ");
         int userResponse = input.nextInt();
 
-        switch (userResponse){
-            case 1:
-                deckOfCards.addToDiscardPile(humanPlayer.getCard(userResponse-1));
-                break;
-        }
+        deckOfCards.addToDiscardPile(humanPlayer.getCard(userResponse-1));
+        humanPlayer.discardCardFromHand(userResponse-1);
     }
 }
