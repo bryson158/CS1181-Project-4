@@ -22,20 +22,44 @@ public class Human extends Player{
             }
             else {
                 this.addCardToHand(deck.dealCard());
+                System.out.println("You drew the " + this.cardString(this.getCard(4)));
             }
         }
     }
 
+    //Handles the players discard decision
     public void discardDecison(Scanner input, Deck deck){
         System.out.println("Now you cards are:");
 
         printHand();
+
+        System.out.println("Which card do you want to discard (1-5)?");
+
+        int userInput = input.nextInt();
+
+        switch (userInput){
+            case 1:
+                this.discardCardFromHand( 0, deck);
+                break;
+            case 2:
+                this.discardCardFromHand(1, deck);
+                break;
+            case 3:
+                this.discardCardFromHand(2, deck);
+                break;
+            case 4:
+                this.discardCardFromHand(3, deck);
+                break;
+            case 5:
+                this.discardCardFromHand(4, deck);
+                break;
+        }
     }
 
     //Prints out the users hand
     private void printHand(){
         for(int i = 0; i < this.handSize(); i++){
-            System.out.println("    " + this.cardString(this.getCard(i)));
+            System.out.println("    " + (i+1) + this.cardString(this.getCard(i)));
         }
     }
 }

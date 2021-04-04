@@ -42,8 +42,15 @@ public class Game {
             dealFirstCards(playersList, deckOfCards);
 
             for(int i = 0; i < playersList.size(); i++){
+                //Handles the human players turn
                 if(playersList.get(i) == humanPlayer){
                     humanPlayer.drawDecison(input, deckOfCards);
+                    humanPlayer.discardDecison(input, deckOfCards);
+                }
+                for(int p = 0; p < robotList.size(); p++){
+                    if(playersList.get(i) == robotList.get(p)){
+                        robotList.get(p).robotDrawDecison(deckOfCards);
+                    }
                 }
 
                 boolean gameWon = playersList.get(i).playerWonGame();

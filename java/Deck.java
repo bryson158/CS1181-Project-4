@@ -61,4 +61,8 @@ public class Deck {
         discardPile.clear();
         System.out.println("The discard pile has been shuffled into the deck.");
     }
+
+    public int topDiscardNumericalValue(){
+        return this.discardCardTop().getNumericalValue();
+    }
 }
