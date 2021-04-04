@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Game {
@@ -16,76 +17,56 @@ public class Game {
 
         playersList.add(humanPlayer);
 
+        ArrayList<Robot> robotList = new ArrayList<>();
+
         //Adds the robots to the players list
         for (int i = 0; i < 3; i++) {
-            playersList.add(new Robot());
+            robotList.add(new Robot());
         }
+
+        for(int i = 0; i < robotList.size(); i++){
+            playersList.add(robotList.get(i));
+        }
+
+        Collections.shuffle(playersList);
 
         //Calls the method to deal the first cards
         dealFirstCards(playersList, deckOfCards);
 
-        //Will run the game until someone wins the game
-        while (!win()) {
-            System.out.println("Your cards are: ");
-            for(int i = 0; i < humanPlayer.handSize(); i++){
-                    System.out.println("    " + humanPlayer.cardString(humanPlayer.getCard(i)));
-            }
+        //The bool used for the loop
+        boolean gameOver = false;
 
-            playerDrawDecision(deckOfCards, input, humanPlayer);
-            playerDiscardDecision(deckOfCards, input, humanPlayer);
+        //Will run the game until someone wins the game
+        while (!gameOver){
+            //Calls the method to deal the first hands of the game
+            dealFirstCards(playersList, deckOfCards);
+
+            for(int i = 0; i < playersList.size(); i++){
+                if(playersList.get(i) == humanPlayer){
+                    humanPlayer.drawDecison(input, deckOfCards);
+                }
+
+                boolean gameWon = playersList.get(i).playerWonGame();
+                if(gameWon){
+                    for(int p = 0; p < robotList.size(); p++){
+                        if(robotList.get(p) == playersList.get(i)){
+                            System.out.println("I Won!");
+                            gameOver = true;
+                            break;
+                        }
+                    }
+                }
+            }
         }
     }
 
-    //Checks if the player has won the game
-    private static boolean win(){
-        //TODO- add logic to check if a player has won the game
-        return false;
-    }
-
     //Deals out the first round of cards
-    private static void dealFirstCards(ArrayList<Player> players, Deck deck){
-        for(int i = 0; i < players.size(); i++){
-            while (players.get(i).handSize() < 4){
+    private static void dealFirstCards(ArrayList<Player> players, Deck deck) {
+        for (int i = 0; i < players.size(); i++) {
+            while (players.get(i).handSize() < 4) {
                 players.get(i).addCardToHand(deck.dealCard());
             }
         }
     }
 
-    //Method for allowing the human player to make their decisions
-    private static void playerDrawDecision(Deck deckOfCards, Scanner input, Player humanPlayer){
-        if(deckOfCards.drawPileSize() == 0){
-            System.out.println("The draw pile is empty you must draw a card from the discard pile: ");
-            humanPlayer.addCardToHand(deckOfCards.discardCardDraw());
-        }
-        else if(deckOfCards.discardPileSize() == 0){
-            System.out.println("The discard pile is empty -- you must draw a card");
-            humanPlayer.addCardToHand(deckOfCards.dealCard());
-        }
-        else {
-            System.out.println("Do you want to pick up " + deckOfCards.discardCardTop().cardString() + " (1) or draw a " +
-                    "card (2)?");
-            int userResponse = input.nextInt();
-            //If the user wants to draw from the discard pile
-            if(userResponse == 1){
-                humanPlayer.addCardToHand(deckOfCards.discardCardDraw());
-            }
-            //Draws a card from the deck
-            else {
-                humanPlayer.addCardToHand(deckOfCards.dealCard());
-            }
-        }
-    }
-
-    //Asks the player what card the want to draw and enacts what they want to do
-    private static void playerDiscardDecision(Deck deckOfCards, Scanner input, Player humanPlayer){
-        for(int i = 0; i < humanPlayer.handSize(); i++){
-            System.out.println("   " + (i+1) +"." + humanPlayer.cardString(humanPlayer.getCard(i)));
-        }
-
-        System.out.println("Which card do you wish to discard (1-5)? ");
-        int userResponse = input.nextInt();
-
-        deckOfCards.addToDiscardPile(humanPlayer.getCard(userResponse-1));
-        humanPlayer.discardCardFromHand(userResponse-1);
-    }
 }

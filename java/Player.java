@@ -83,4 +83,34 @@ public class Player {
     public Card getCard(int cardNumber){
         return hand.get(cardNumber);
     }
+
+    //Determines if player has won the game
+    public boolean playerWonGame(){
+        for(int i = 0; i < this.handSize(); i++){
+            if(i > 0){
+                if(this.getCard(i -1).getNumericalValue() == this.getCard(i).getNumericalValue()){
+                    if(i == 3){
+                        return true;
+                    }
+                    else {
+                        continue;
+                    }
+                }
+                else {
+                    return false;
+                }
+            }
+            else if(i == 0){
+                continue;
+            }
+            else {
+                return false;
+            }
+        }
+        return false;
+    }
+
+    public ArrayList<Card> returnPlayerHand(){
+        return this.hand;
+    }
 }

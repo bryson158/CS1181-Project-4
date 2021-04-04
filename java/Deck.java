@@ -48,10 +48,17 @@ public class Deck {
         return discardPile.get(discardPile.size()-1);
     }
 
-    //Draws from the discard pile and removes the card from it
+    //Draws from the discard pile and removes the card from the discard pile list
     public Card discardCardDraw(){
         Card card = discardCardTop();
         this.discardPile.remove(card);
         return card;
+    }
+
+    //Shuffles the discard pile and resets it to be the draw pile now
+    public void outOfCardShuffle(){
+        this.drawPile = discardPile;
+        discardPile.clear();
+        System.out.println("The discard pile has been shuffled into the deck.");
     }
 }
