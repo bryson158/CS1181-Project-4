@@ -2,7 +2,8 @@ import java.util.Scanner;
 
 public class Human extends Player{
 
-    public void drawDecison(Scanner input, Deck deck){
+    //Handles the humans draw decision and input
+    public void drawDecision(Scanner input, Deck deck){
         System.out.println("You cards are:");
 
         printHand();
@@ -56,7 +57,7 @@ public class Human extends Player{
         }
     }
 
-    //Prints out the users hand
+    //Prints out the users hand in string form
     private void printHand(){
         for(int i = 0; i < this.handSize(); i++){
             System.out.println("    " + (i+1) + this.cardString(this.getCard(i)));

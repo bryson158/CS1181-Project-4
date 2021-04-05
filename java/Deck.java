@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Deck {
-    private ArrayList<Card> drawPile = new ArrayList<>();
+    private ArrayList<Card> drawPile;
     private ArrayList<Card> discardPile = new ArrayList<>();
 
     //Creates the deck of cards
@@ -23,8 +23,11 @@ public class Deck {
 
     //Deals a card and chooses it at random
     public Card dealCard(){
+        if(drawPile.size() == 0){
+            System.out.println("The discard pile was shuffled into the deck.");
+            this.outOfCardShuffle();
+        }
         Random rng = new Random();
-
         Card cardPicked = drawPile.get(rng.nextInt(drawPile.size()));
 
         //Removes the card from the draw pile

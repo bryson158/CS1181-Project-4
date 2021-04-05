@@ -24,10 +24,10 @@ public class Game {
             robotList.add(new Robot());
         }
 
-        for(int i = 0; i < robotList.size(); i++){
-            playersList.add(robotList.get(i));
-        }
+        //Adds the robots to the player list
+        playersList.addAll(robotList);
 
+        //Randomizes the player list so the order in which turns are taken are random
         Collections.shuffle(playersList);
 
         //Calls the method to deal the first cards
@@ -44,24 +44,37 @@ public class Game {
             for(int i = 0; i < playersList.size(); i++){
                 //Handles the human players turn
                 if(playersList.get(i) == humanPlayer){
-                    humanPlayer.drawDecison(input, deckOfCards);
+                    humanPlayer.drawDecision(input, deckOfCards);
                     humanPlayer.discardDecison(input, deckOfCards);
                 }
                 for(int p = 0; p < robotList.size(); p++){
                     if(playersList.get(i) == robotList.get(p)){
-                        robotList.get(p).robotDrawDecison(deckOfCards);
+                        //Calls the methods needed for the robots turn
+                        robotList.get(p).robotDrawDecision(deckOfCards);
+                        robotList.get(p).discardDecision(deckOfCards);
                     }
                 }
 
-                boolean gameWon = playersList.get(i).playerWonGame();
-                if(gameWon){
+                //Sets the while loops bool to the result of the method used for determining the winner of the game
+                gameOver = playersList.get(i).playerWonGame();
+                if(gameOver){
+                    //Informs the user if they lost the game
                     for(int p = 0; p < robotList.size(); p++){
                         if(robotList.get(p) == playersList.get(i)){
-                            System.out.println("I Won!");
+                            System.out.println("I won!");
                             gameOver = true;
                             break;
                         }
                     }
+                    //Informs the user that they won the game
+                    if(humanPlayer == playersList.get(i)){
+                        System.out.println("You won!");
+                        gameOver = true;
+                        break;
+                    }
+                }
+                if(gameOver){
+                    break;
                 }
             }
         }

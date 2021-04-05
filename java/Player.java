@@ -8,17 +8,18 @@ public class Player {
         return this.hand.size();
     }
 
+    //Method for adding a card to a players hand
     public void addCardToHand(Card c){
         this.hand.add(c);
     }
 
+    //Method for discarding a specific card from the players hand
     public void discardCardFromHand(int index, Deck deck){
-        deck.addToDiscardPile(this.getCard(index));
+        deck.addToDiscardPile(getCard(index));
         hand.remove(index);
     }
 
     //Returns the value of the card in a string
-    //TODO- consider removing this and just using the same method in the card class
     public String cardString(Card c){
         String card = "";
 
@@ -81,36 +82,24 @@ public class Player {
         return card;
     }
 
+    //Returns a specific card in a players hand
     public Card getCard(int cardNumber){
         return hand.get(cardNumber);
     }
 
+
     //Determines if player has won the game
     public boolean playerWonGame(){
+        int check = this.getCard(0).getNumericalValue();
         for(int i = 0; i < this.handSize(); i++){
-            if(i > 0){
-                if(this.getCard(i -1).getNumericalValue() == this.getCard(i).getNumericalValue()){
-                    if(i == 3){
-                        return true;
-                    }
-                    else {
-                        continue;
-                    }
-                }
-                else {
-                    return false;
-                }
-            }
-            else if(i == 0){
-                continue;
-            }
-            else {
+            if(check != this.getCard(i).getNumericalValue()){
                 return false;
             }
         }
-        return false;
+        return true;
     }
 
+    //Returns the entirety of a players hand in an arraylist
     public ArrayList<Card> returnPlayerHand(){
         return this.hand;
     }
